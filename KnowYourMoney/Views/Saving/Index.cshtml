@@ -1,0 +1,40 @@
+﻿@model IEnumerable<KnowYourMoney.Models.tblSaving>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SavingsTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tblAccountInfo.UserLogIn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SavingsTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tblAccountInfo.UserLogIn)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SavingsID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SavingsID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SavingsID })
+        </td>
+    </tr>
+}
+
+</table>

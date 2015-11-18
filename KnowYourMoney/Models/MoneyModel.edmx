@@ -1,0 +1,831 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IST421JimTeam3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblAccountInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserLogIn" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserFName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserLName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tblAccountSummary">
+          <Key>
+            <PropertyRef Name="SummaryID" />
+          </Key>
+          <Property Name="SummaryID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="DepositID" Type="int" Nullable="false" />
+          <Property Name="WithdrawID" Type="int" Nullable="false" />
+          <Property Name="BudgetID" Type="int" Nullable="false" />
+          <Property Name="SavingsID" Type="int" Nullable="false" />
+          <Property Name="TransactionID" Type="int" Nullable="false" />
+          <Property Name="ExpenseID" Type="int" Nullable="false" />
+          <Property Name="Projected" Type="money" />
+          <Property Name="Actual" Type="money" />
+          <Property Name="Difference" Type="money" />
+        </EntityType>
+        <EntityType Name="tblBudget">
+          <Key>
+            <PropertyRef Name="BudgetID" />
+          </Key>
+          <Property Name="BudgetID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="BudgetRemaining" Type="money" />
+          <Property Name="BudgetTotal" Type="money" />
+        </EntityType>
+        <EntityType Name="tblDeposit">
+          <Key>
+            <PropertyRef Name="DepositID" />
+          </Key>
+          <Property Name="DepositID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="DepositAmount" Type="money" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <EntityType Name="tblExpenses">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="TransactionID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="ExpenseTotal" Type="money" />
+        </EntityType>
+        <EntityType Name="tblSavings">
+          <Key>
+            <PropertyRef Name="SavingsID" />
+          </Key>
+          <Property Name="SavingsID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="SavingsTotal" Type="money" />
+        </EntityType>
+        <EntityType Name="tblTransaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Merchant" Type="varchar" MaxLength="32" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Category" Type="varchar" MaxLength="32" />
+          <Property Name="Notes" Type="varchar" MaxLength="120" />
+          <Property Name="Spent" Type="money" />
+        </EntityType>
+        <EntityType Name="tblWithdraw">
+          <Key>
+            <PropertyRef Name="WithdrawID" />
+          </Key>
+          <Property Name="WithdrawID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="WithdrawAmount" Type="money" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <Association Name="fk_BudgetID_Summary">
+          <End Role="tblBudget" Type="Self.tblBudget" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBudget">
+              <PropertyRef Name="BudgetID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="BudgetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DepositID_Summary">
+          <End Role="tblDeposit" Type="Self.tblDeposit" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDeposit">
+              <PropertyRef Name="DepositID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="DepositID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ExpenseID_Summary">
+          <End Role="tblExpenses" Type="Self.tblExpenses" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblExpenses">
+              <PropertyRef Name="ExpenseID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="ExpenseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SavingsID_Summary">
+          <End Role="tblSavings" Type="Self.tblSavings" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSavings">
+              <PropertyRef Name="SavingsID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="SavingsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TransactionID_Expenses">
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="1" />
+          <End Role="tblExpenses" Type="Self.tblExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TransactionID_Summary">
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Budget">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblBudget" Type="Self.tblBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblBudget">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Deposit">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblDeposit" Type="Self.tblDeposit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblDeposit">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Expenses">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblExpenses" Type="Self.tblExpenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Savings">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblSavings" Type="Self.tblSavings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblSavings">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Summary">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Transaction">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Withdraw">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblWithdraw" Type="Self.tblWithdraw" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblWithdraw">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_WithdrawID_Summary">
+          <End Role="tblWithdraw" Type="Self.tblWithdraw" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWithdraw">
+              <PropertyRef Name="WithdrawID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="WithdrawID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IST421JimTeam3ModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAccountInfo" EntityType="Self.tblAccountInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAccountSummary" EntityType="Self.tblAccountSummary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBudget" EntityType="Self.tblBudget" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDeposit" EntityType="Self.tblDeposit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblExpenses" EntityType="Self.tblExpenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSavings" EntityType="Self.tblSavings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTransaction" EntityType="Self.tblTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblWithdraw" EntityType="Self.tblWithdraw" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_BudgetID_Summary" Association="Self.fk_BudgetID_Summary">
+            <End Role="tblBudget" EntitySet="tblBudget" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummary" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DepositID_Summary" Association="Self.fk_DepositID_Summary">
+            <End Role="tblDeposit" EntitySet="tblDeposit" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummary" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ExpenseID_Summary" Association="Self.fk_ExpenseID_Summary">
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummary" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SavingsID_Summary" Association="Self.fk_SavingsID_Summary">
+            <End Role="tblSavings" EntitySet="tblSavings" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummary" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TransactionID_Expenses" Association="Self.fk_TransactionID_Expenses">
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TransactionID_Summary" Association="Self.fk_TransactionID_Summary">
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummary" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Budget" Association="Self.fk_UserID_Budget">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfo" />
+            <End Role="tblBudget" EntitySet="tblBudget" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Deposit" Association="Self.fk_UserID_Deposit">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfo" />
+            <End Role="tblDeposit" EntitySet="tblDeposit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Expenses" Association="Self.fk_UserID_Expenses">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfo" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Savings" Association="Self.fk_UserID_Savings">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfo" />
+            <End Role="tblSavings" EntitySet="tblSavings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Summary" Association="Self.fk_UserID_Summary">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfo" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummary" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Transaction" Association="Self.fk_UserID_Transaction">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfo" />
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Withdraw" Association="Self.fk_UserID_Withdraw">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfo" />
+            <End Role="tblWithdraw" EntitySet="tblWithdraw" />
+          </AssociationSet>
+          <AssociationSet Name="fk_WithdrawID_Summary" Association="Self.fk_WithdrawID_Summary">
+            <End Role="tblWithdraw" EntitySet="tblWithdraw" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummary" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IST421JimTeam3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblAccountInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserLogIn" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserFName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserLName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblBudgets" Relationship="Self.fk_UserID_Budget" FromRole="tblAccountInfo" ToRole="tblBudget" />
+          <NavigationProperty Name="tblDeposits" Relationship="Self.fk_UserID_Deposit" FromRole="tblAccountInfo" ToRole="tblDeposit" />
+          <NavigationProperty Name="tblExpenses" Relationship="Self.fk_UserID_Expenses" FromRole="tblAccountInfo" ToRole="tblExpenses" />
+          <NavigationProperty Name="tblSavings" Relationship="Self.fk_UserID_Savings" FromRole="tblAccountInfo" ToRole="tblSavings" />
+          <NavigationProperty Name="tblAccountSummaries" Relationship="Self.fk_UserID_Summary" FromRole="tblAccountInfo" ToRole="tblAccountSummary" />
+          <NavigationProperty Name="tblTransactions" Relationship="Self.fk_UserID_Transaction" FromRole="tblAccountInfo" ToRole="tblTransaction" />
+          <NavigationProperty Name="tblWithdraws" Relationship="Self.fk_UserID_Withdraw" FromRole="tblAccountInfo" ToRole="tblWithdraw" />
+        </EntityType>
+        <EntityType Name="tblAccountSummary">
+          <Key>
+            <PropertyRef Name="SummaryID" />
+          </Key>
+          <Property Name="SummaryID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="DepositID" Type="Int32" Nullable="false" />
+          <Property Name="WithdrawID" Type="Int32" Nullable="false" />
+          <Property Name="BudgetID" Type="Int32" Nullable="false" />
+          <Property Name="SavingsID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionID" Type="Int32" Nullable="false" />
+          <Property Name="ExpenseID" Type="Int32" Nullable="false" />
+          <Property Name="Projected" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Actual" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Difference" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccountInfo" Relationship="Self.fk_UserID_Summary" FromRole="tblAccountSummary" ToRole="tblAccountInfo" />
+          <NavigationProperty Name="tblBudget" Relationship="Self.fk_BudgetID_Summary" FromRole="tblAccountSummary" ToRole="tblBudget" />
+          <NavigationProperty Name="tblDeposit" Relationship="Self.fk_DepositID_Summary" FromRole="tblAccountSummary" ToRole="tblDeposit" />
+          <NavigationProperty Name="tblExpens" Relationship="Self.fk_ExpenseID_Summary" FromRole="tblAccountSummary" ToRole="tblExpenses" />
+          <NavigationProperty Name="tblSaving" Relationship="Self.fk_SavingsID_Summary" FromRole="tblAccountSummary" ToRole="tblSavings" />
+          <NavigationProperty Name="tblTransaction" Relationship="Self.fk_TransactionID_Summary" FromRole="tblAccountSummary" ToRole="tblTransaction" />
+          <NavigationProperty Name="tblWithdraw" Relationship="Self.fk_WithdrawID_Summary" FromRole="tblAccountSummary" ToRole="tblWithdraw" />
+        </EntityType>
+        <EntityType Name="tblBudget">
+          <Key>
+            <PropertyRef Name="BudgetID" />
+          </Key>
+          <Property Name="BudgetID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="BudgetRemaining" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BudgetTotal" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccountInfo" Relationship="Self.fk_UserID_Budget" FromRole="tblBudget" ToRole="tblAccountInfo" />
+          <NavigationProperty Name="tblAccountSummaries" Relationship="Self.fk_BudgetID_Summary" FromRole="tblBudget" ToRole="tblAccountSummary" />
+        </EntityType>
+        <EntityType Name="tblDeposit">
+          <Key>
+            <PropertyRef Name="DepositID" />
+          </Key>
+          <Property Name="DepositID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="DepositAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblAccountInfo" Relationship="Self.fk_UserID_Deposit" FromRole="tblDeposit" ToRole="tblAccountInfo" />
+          <NavigationProperty Name="tblAccountSummaries" Relationship="Self.fk_DepositID_Summary" FromRole="tblDeposit" ToRole="tblAccountSummary" />
+        </EntityType>
+        <EntityType Name="tblExpens">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="ExpenseTotal" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccountInfo" Relationship="Self.fk_UserID_Expenses" FromRole="tblExpenses" ToRole="tblAccountInfo" />
+          <NavigationProperty Name="tblAccountSummaries" Relationship="Self.fk_ExpenseID_Summary" FromRole="tblExpenses" ToRole="tblAccountSummary" />
+          <NavigationProperty Name="tblTransaction" Relationship="Self.fk_TransactionID_Expenses" FromRole="tblExpenses" ToRole="tblTransaction" />
+        </EntityType>
+        <EntityType Name="tblSaving">
+          <Key>
+            <PropertyRef Name="SavingsID" />
+          </Key>
+          <Property Name="SavingsID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="SavingsTotal" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccountInfo" Relationship="Self.fk_UserID_Savings" FromRole="tblSavings" ToRole="tblAccountInfo" />
+          <NavigationProperty Name="tblAccountSummaries" Relationship="Self.fk_SavingsID_Summary" FromRole="tblSavings" ToRole="tblAccountSummary" />
+        </EntityType>
+        <EntityType Name="tblTransaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Merchant" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Category" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Spent" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblAccountInfo" Relationship="Self.fk_UserID_Transaction" FromRole="tblTransaction" ToRole="tblAccountInfo" />
+          <NavigationProperty Name="tblAccountSummaries" Relationship="Self.fk_TransactionID_Summary" FromRole="tblTransaction" ToRole="tblAccountSummary" />
+          <NavigationProperty Name="tblExpenses" Relationship="Self.fk_TransactionID_Expenses" FromRole="tblTransaction" ToRole="tblExpenses" />
+        </EntityType>
+        <EntityType Name="tblWithdraw">
+          <Key>
+            <PropertyRef Name="WithdrawID" />
+          </Key>
+          <Property Name="WithdrawID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="WithdrawAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblAccountInfo" Relationship="Self.fk_UserID_Withdraw" FromRole="tblWithdraw" ToRole="tblAccountInfo" />
+          <NavigationProperty Name="tblAccountSummaries" Relationship="Self.fk_WithdrawID_Summary" FromRole="tblWithdraw" ToRole="tblAccountSummary" />
+        </EntityType>
+        <Association Name="fk_UserID_Budget">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblBudget" Type="Self.tblBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblBudget">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Deposit">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblDeposit" Type="Self.tblDeposit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblDeposit">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Expenses">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Savings">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblSavings" Type="Self.tblSaving" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblSavings">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Summary">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Transaction">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID_Withdraw">
+          <End Role="tblAccountInfo" Type="Self.tblAccountInfo" Multiplicity="1" />
+          <End Role="tblWithdraw" Type="Self.tblWithdraw" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccountInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblWithdraw">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BudgetID_Summary">
+          <End Role="tblBudget" Type="Self.tblBudget" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBudget">
+              <PropertyRef Name="BudgetID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="BudgetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DepositID_Summary">
+          <End Role="tblDeposit" Type="Self.tblDeposit" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDeposit">
+              <PropertyRef Name="DepositID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="DepositID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ExpenseID_Summary">
+          <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblExpenses">
+              <PropertyRef Name="ExpenseID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="ExpenseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SavingsID_Summary">
+          <End Role="tblSavings" Type="Self.tblSaving" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSavings">
+              <PropertyRef Name="SavingsID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="SavingsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TransactionID_Summary">
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_WithdrawID_Summary">
+          <End Role="tblWithdraw" Type="Self.tblWithdraw" Multiplicity="1" />
+          <End Role="tblAccountSummary" Type="Self.tblAccountSummary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblWithdraw">
+              <PropertyRef Name="WithdrawID" />
+            </Principal>
+            <Dependent Role="tblAccountSummary">
+              <PropertyRef Name="WithdrawID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TransactionID_Expenses">
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="1" />
+          <End Role="tblExpenses" Type="Self.tblExpens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTransaction">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="tblExpenses">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IST421JimTeam3Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tblAccountInfoes" EntityType="Self.tblAccountInfo" />
+          <EntitySet Name="tblAccountSummaries" EntityType="Self.tblAccountSummary" />
+          <EntitySet Name="tblBudgets" EntityType="Self.tblBudget" />
+          <EntitySet Name="tblDeposits" EntityType="Self.tblDeposit" />
+          <EntitySet Name="tblExpenses" EntityType="Self.tblExpens" />
+          <EntitySet Name="tblSavings" EntityType="Self.tblSaving" />
+          <EntitySet Name="tblTransactions" EntityType="Self.tblTransaction" />
+          <EntitySet Name="tblWithdraws" EntityType="Self.tblWithdraw" />
+          <AssociationSet Name="fk_UserID_Budget" Association="Self.fk_UserID_Budget">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfoes" />
+            <End Role="tblBudget" EntitySet="tblBudgets" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Deposit" Association="Self.fk_UserID_Deposit">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfoes" />
+            <End Role="tblDeposit" EntitySet="tblDeposits" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Expenses" Association="Self.fk_UserID_Expenses">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfoes" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Savings" Association="Self.fk_UserID_Savings">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfoes" />
+            <End Role="tblSavings" EntitySet="tblSavings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Summary" Association="Self.fk_UserID_Summary">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfoes" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummaries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Transaction" Association="Self.fk_UserID_Transaction">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfoes" />
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID_Withdraw" Association="Self.fk_UserID_Withdraw">
+            <End Role="tblAccountInfo" EntitySet="tblAccountInfoes" />
+            <End Role="tblWithdraw" EntitySet="tblWithdraws" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BudgetID_Summary" Association="Self.fk_BudgetID_Summary">
+            <End Role="tblBudget" EntitySet="tblBudgets" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummaries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DepositID_Summary" Association="Self.fk_DepositID_Summary">
+            <End Role="tblDeposit" EntitySet="tblDeposits" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummaries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ExpenseID_Summary" Association="Self.fk_ExpenseID_Summary">
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummaries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SavingsID_Summary" Association="Self.fk_SavingsID_Summary">
+            <End Role="tblSavings" EntitySet="tblSavings" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummaries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TransactionID_Summary" Association="Self.fk_TransactionID_Summary">
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummaries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_WithdrawID_Summary" Association="Self.fk_WithdrawID_Summary">
+            <End Role="tblWithdraw" EntitySet="tblWithdraws" />
+            <End Role="tblAccountSummary" EntitySet="tblAccountSummaries" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TransactionID_Expenses" Association="Self.fk_TransactionID_Expenses">
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+            <End Role="tblExpenses" EntitySet="tblExpenses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IST421JimTeam3ModelStoreContainer" CdmEntityContainer="IST421JimTeam3Entities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccountInfoes">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblAccountInfo">
+              <MappingFragment StoreEntitySet="tblAccountInfo">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserLogIn" ColumnName="UserLogIn" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserFName" ColumnName="UserFName" />
+                <ScalarProperty Name="UserLName" ColumnName="UserLName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccountSummaries">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblAccountSummary">
+              <MappingFragment StoreEntitySet="tblAccountSummary">
+                <ScalarProperty Name="SummaryID" ColumnName="SummaryID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DepositID" ColumnName="DepositID" />
+                <ScalarProperty Name="WithdrawID" ColumnName="WithdrawID" />
+                <ScalarProperty Name="BudgetID" ColumnName="BudgetID" />
+                <ScalarProperty Name="SavingsID" ColumnName="SavingsID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
+                <ScalarProperty Name="Projected" ColumnName="Projected" />
+                <ScalarProperty Name="Actual" ColumnName="Actual" />
+                <ScalarProperty Name="Difference" ColumnName="Difference" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBudgets">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblBudget">
+              <MappingFragment StoreEntitySet="tblBudget">
+                <ScalarProperty Name="BudgetID" ColumnName="BudgetID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BudgetRemaining" ColumnName="BudgetRemaining" />
+                <ScalarProperty Name="BudgetTotal" ColumnName="BudgetTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDeposits">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblDeposit">
+              <MappingFragment StoreEntitySet="tblDeposit">
+                <ScalarProperty Name="DepositID" ColumnName="DepositID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExpenses">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblExpens">
+              <MappingFragment StoreEntitySet="tblExpenses">
+                <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ExpenseTotal" ColumnName="ExpenseTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSavings">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblSaving">
+              <MappingFragment StoreEntitySet="tblSavings">
+                <ScalarProperty Name="SavingsID" ColumnName="SavingsID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SavingsTotal" ColumnName="SavingsTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransactions">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblTransaction">
+              <MappingFragment StoreEntitySet="tblTransaction">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Merchant" ColumnName="Merchant" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Spent" ColumnName="Spent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblWithdraws">
+            <EntityTypeMapping TypeName="IST421JimTeam3Model.tblWithdraw">
+              <MappingFragment StoreEntitySet="tblWithdraw">
+                <ScalarProperty Name="WithdrawID" ColumnName="WithdrawID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="WithdrawAmount" ColumnName="WithdrawAmount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

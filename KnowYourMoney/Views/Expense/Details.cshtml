@@ -1,0 +1,51 @@
+﻿@model KnowYourMoney.Models.tblExpens
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tblExpens</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpenseTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpenseTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tblAccountInfo.UserLogIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tblAccountInfo.UserLogIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tblTransaction.Merchant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tblTransaction.Merchant)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ExpenseID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
