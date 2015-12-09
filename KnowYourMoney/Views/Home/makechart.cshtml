@@ -7,11 +7,11 @@
 <h2>makechart</h2>
 @{
     var myChart = new Chart(width: 600, height: 400)
-        .AddTitle("Chart Title")
+        .AddTitle("Net Monthly Savings")
         .AddSeries(
-            name: "Employee",
-            xValue: new[] { "Peter", "Andrew", "Julie", "Mary", "Dave" },
-            yValues: new[] { "2", "6", "4", "5", "3" })
+            name: "Net Monthly Savings",
+            xValue: new[] { "August", "September", "October", "November", "December" },
+            yValues: new[] { "$1245.26", "$904.65", "$544.21", "$1005.87", "$803.53" })
         .Write();
 }
 
