@@ -85,7 +85,7 @@ namespace KnowYourMoney.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ExpenseID,UserID,TransactionID,Date,ExpenseTotal")] tblExpens tblExpens)
+        public ActionResult Edit([Bind(Include = "ExpenseID,UserID,Merchant,Date,ExpenseTotal")] tblExpens tblExpens)
         {
             if (ModelState.IsValid)
             {
