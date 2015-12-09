@@ -253,6 +253,7 @@
     <Content Include="Views\Total\Edit.cshtml" />
     <Content Include="Views\Total\Index.cshtml" />
     <Content Include="Views\Home\makechart.cshtml" />
+    <Content Include="Views\Home\makechart2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

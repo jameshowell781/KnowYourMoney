@@ -1,19 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "makechart";
+    ViewBag.Title = "makechart2";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>makechart</h2>
+<h2>makechart2</h2>
+
 @{
-    var myChart = new Chart(width: 600, height: 400)
+    var Chart = new Chart(width: 600, height: 400)
         .AddTitle("Net Monthly Savings")
         .AddSeries(
-            chartType: "Line",  
             name: "Net Monthly Savings",
             xValue: new[] { "August", "September", "October", "November", "December" },
             yValues: new[] { "$1245.26", "$1074.65", "$744.21", "$1005.87", "$803.53" })
         .Write();
 }
-
-
