@@ -48,7 +48,7 @@ namespace KnowYourMoney.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DepositID,UserID,DepositAmount,Date")] tblDeposit tblDeposit)
+        public ActionResult Create([Bind(Include = "UserID,DepositAmount,Date")] tblDeposit tblDeposit)
         {
             if (ModelState.IsValid)
             {
