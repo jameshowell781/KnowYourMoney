@@ -123,6 +123,7 @@
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SavingController.cs" />
+    <Compile Include="Controllers\TotalController.cs" />
     <Compile Include="Controllers\WithdrawController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -198,6 +199,7 @@
       <LastGenOutput>MoneyModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Calculation.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -244,6 +246,12 @@
     <Content Include="Views\Withdraw\Details.cshtml" />
     <Content Include="Views\Withdraw\Edit.cshtml" />
     <Content Include="Views\Withdraw\Index.cshtml" />
+    <Content Include="Views\Total\Create.cshtml" />
+    <Content Include="Views\Total\Delete.cshtml" />
+    <Content Include="Views\Total\Details.cshtml" />
+    <Content Include="Views\Total\Edit.cshtml" />
+    <Content Include="Views\Total\Index.cshtml" />
+    <Content Include="Views\Home\makechart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
