@@ -26,5 +26,9 @@ namespace KnowYourMoney.Controllers
 
             return View();
         }
+        public ActionResult makechart()
+        {
+            return View();
+        }
     }
 }
