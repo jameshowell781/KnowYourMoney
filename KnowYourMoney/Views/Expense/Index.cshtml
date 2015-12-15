@@ -22,31 +22,48 @@
             @Html.DisplayNameFor(model => model.tblAccountInfo.UserLogIn)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tblTransaction.Merchant)
+            @Html.DisplayNameFor(model => model.tblTransaction.Category)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExpenseTotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tblAccountInfo.UserLogIn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tblTransaction.Merchant)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ExpenseID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ExpenseID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ExpenseID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpenseTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblAccountInfo.UserLogIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblTransaction.Category)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ExpenseID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ExpenseID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ExpenseID })
+            </td>
+        </tr>
+    }
 
 </table>
+<table class="table">
+    <tr>
+        <th>
+            Total Expenses
+        </th>
+        <th style="padding-right:150px;">
+            @ViewData["expense_total"]
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+    </table>

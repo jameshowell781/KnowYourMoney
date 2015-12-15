@@ -17,7 +17,13 @@ namespace KnowYourMoney.Controllers
         // GET: Expense
         public ActionResult Index()
         {
-            var tblExpenses = db.tblExpenses.Include(t => t.tblAccountInfo).Include(t => t.tblTransaction);
+            
+            var tblExpenses = db.tblExpenses.Include(t => t.tblAccountInfo).Include(t => t.tblTransaction).Where(x => x.UserID == 6);
+            decimal? total_expense = 0;
+            foreach (tblExpens cost in tblExpenses)
+                total_expense +=  cost.ExpenseTotal;
+            string currencyValue = total_expense.Value.ToString("0.00");
+            ViewData["expense_total"] = currencyValue;
             return View(tblExpenses.ToList());
         }
 
@@ -40,7 +46,7 @@ namespace KnowYourMoney.Controllers
         public ActionResult Create()
         {
             ViewBag.UserID = new SelectList(db.tblAccountInfoes, "UserID", "UserLogIn");
-            ViewBag.TransactionID = new SelectList(db.tblTransactions, "TransactionID", "Merchant");
+            ViewBag.TransactionID = new SelectList(db.tblTransactions, "TransactionID", "Category");
             return View();
         }
 
@@ -59,7 +65,7 @@ namespace KnowYourMoney.Controllers
             }
 
             ViewBag.UserID = new SelectList(db.tblAccountInfoes, "UserID", "UserLogIn", tblExpens.UserID);
-            ViewBag.TransactionID = new SelectList(db.tblTransactions, "TransactionID", "Merchant", tblExpens.TransactionID);
+            ViewBag.TransactionID = new SelectList(db.tblTransactions, "TransactionID", "Category", tblExpens.TransactionID);
             return View(tblExpens);
         }
 
