@@ -21,8 +21,62 @@
     <h1>Welcome, demo_user<img alt="logo" class="logo" src="../../Content/Images/moneymoney.png" /></h1>
 </div>
 <div id="chart_div" style="width:800px; height:400px;">
+    <h2>Mini Summary</h2>
+   <table style="border: 1px solid black; border-collapse:collapse;">
+       <tr>
+           <td width="100" style="border: 1px solid black;">
+               <h5>
+                   Activity
+               </h5>
+           </td>
+           <td width ="80" style="border: 1px solid black;">
+               <h5>
+                   Count
+               </h5>
+           </td>
+           <td width="80" style="border: 1px solid black;">
+               <h5>
+                   Total
+               </h5>
+           </td>
+       </tr>
+       
+       <tr style="border: 1px solid black;">
+           <td style="border: 1px solid black;">
+               Expenses
+           </td>
+           <td style="border: 1px solid black;">
+               @ViewData["expense_count"]
+           </td>
+           <td style="border: 1px solid black;">
+               @ViewData["expense_total"]
+           </td>
 
-
+       </tr>
+       <tr>
+           <td style="border: 1px solid black;">
+               Withdrawals
+           </td>
+           <td style="border: 1px solid black;">
+               @ViewData["withdraw_count"]
+           </td>
+           <td style="border: 1px solid black;">
+               @ViewData["withdraw_total"]
+           </td>
+       </tr>
+       <tr style="border: 1px solid black;">
+           <td style="border: 1px solid black;">
+               Deposits
+           </td>
+           <td style="border: 1px solid black;">
+               @ViewData["deposit_count"]
+           </td>
+           <td style="border: 1px solid black;">
+               @ViewData["deposit_total"]
+           </td>
+       </tr>
+   </table>
+    <h2>Your current savings stand at @ViewData["saving_total"]</h2>
 </div>
 
 @*<div class="wrapper">
