@@ -17,7 +17,12 @@ namespace KnowYourMoney.Controllers
         // GET: Withdraw
         public ActionResult Index()
         {
-            var tblWithdraws = db.tblWithdraws.Include(t => t.tblAccountInfo);
+            var tblWithdraws = db.tblWithdraws.Include(t => t.tblAccountInfo).Where(x => x.UserID == 6);
+            decimal? total_withdraw = 0;
+            foreach (tblWithdraw withdrawn in tblWithdraws)
+                total_withdraw += withdrawn.WithdrawAmount;
+            string currencyValue = total_withdraw.Value.ToString("0.00");
+            ViewData["withdraw_total"] = currencyValue;
             return View(tblWithdraws.ToList());
         }
 

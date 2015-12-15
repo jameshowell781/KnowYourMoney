@@ -17,7 +17,26 @@ namespace KnowYourMoney.Controllers
         // GET: Saving
         public ActionResult Index()
         {
-            var tblSavings = db.tblSavings.Include(t => t.tblAccountInfo);
+            var tblSavings = db.tblSavings.Include(t => t.tblAccountInfo).Where(x => x.UserID == 6);
+            var tblDeposits = db.tblDeposits.Include(t => t.tblAccountInfo).Where(x => x.UserID == 6);
+            var tblWithdraws = db.tblWithdraws.Include(t => t.tblAccountInfo).Where(x => x.UserID == 6);
+            var tblExpenses = db.tblExpenses.Include(t => t.tblAccountInfo).Include(t => t.tblTransaction).Where(x => x.UserID == 6);
+            decimal? total_deposit = 0;
+            foreach (tblDeposit deposited in tblDeposits)
+                total_deposit += deposited.DepositAmount;
+            //string currencydeposit = total_deposit.Value.ToString("0.00");
+            decimal? total_expense = 0;
+            foreach (tblExpens cost in tblExpenses)
+                total_expense += cost.ExpenseTotal;
+            //string currencyexpense = total_expense.Value.ToString("0.00");
+            decimal? total_withdraw = 0;
+            foreach (tblWithdraw withdrawn in tblWithdraws)
+                total_withdraw += withdrawn.WithdrawAmount;
+            //string currencywithdraw = total_withdraw.Value.ToString("0.00");
+            decimal? total_saving = total_deposit - total_withdraw - total_expense;
+            string currencysaving = total_saving.Value.ToString("0.00");
+            ViewData["saving_total"] = currencysaving;
+            
             return View(tblSavings.ToList());
         }
 

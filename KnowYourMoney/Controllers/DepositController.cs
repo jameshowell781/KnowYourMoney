@@ -17,7 +17,12 @@ namespace KnowYourMoney.Controllers
         // GET: Deposit
         public ActionResult Index()
         {
-            var tblDeposits = db.tblDeposits.Include(t => t.tblAccountInfo);
+            var tblDeposits = db.tblDeposits.Include(t => t.tblAccountInfo).Where(x => x.UserID == 6);
+            decimal? total_deposit = 0;
+            foreach (tblDeposit deposited in tblDeposits)
+                total_deposit += deposited.DepositAmount;
+            string currencyValue = total_deposit.Value.ToString("0.00");
+            ViewData["deposit_total"] = currencyValue;
             return View(tblDeposits.ToList());
         }
 

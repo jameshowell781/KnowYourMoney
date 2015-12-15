@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>demo_user Withrawals</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,10 +13,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.WithdrawAmount)
+           @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.WithdrawAmount)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.tblAccountInfo.UserLogIn)
@@ -27,10 +27,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.WithdrawAmount)
+            @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.DisplayFor(modelItem => item.WithdrawAmount)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.tblAccountInfo.UserLogIn)
@@ -43,4 +43,20 @@
     </tr>
 }
 
+</table>
+<table class="table">
+    <tr>
+        <th>
+            Total Deposits
+        </th>
+        <th style="padding-right:90px;">
+            @ViewData["withdraw_total"]
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
 </table>

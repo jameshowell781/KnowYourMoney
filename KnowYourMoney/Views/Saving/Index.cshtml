@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<KnowYourMoney.Models.tblSaving>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "demo_user Savings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>demo_user Savings</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -24,7 +24,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.SavingsTotal)
+            @ViewData["saving_total"]
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.tblAccountInfo.UserLogIn)
